@@ -37,7 +37,7 @@ public class HourlyWeatherAdapter extends RecyclerView.Adapter<HourlyWeatherAdap
         holder.timeText.setText(hourlyWeather.getTime());
         holder.tempText.setText(hourlyWeather.getTempC() + "°C");
 
-        // Load the icon based on the iconPath (the drawable name)
+        // Load the icon based on the iconPath
         String iconPath = hourlyWeather.getIconPath();
         int iconResId = holder.itemView.getContext().getResources().getIdentifier(iconPath, "drawable", holder.itemView.getContext().getPackageName());
 

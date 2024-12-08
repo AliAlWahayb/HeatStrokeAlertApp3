@@ -3,9 +3,8 @@ package com.example.heatstrokealertapp;
 public class HourlyWeather {
     private String time;
     private double tempC;
-    private String iconPath;  // This will store the icon path
+    private String iconPath;
 
-    // Constructor to initialize HourlyWeather object with time, tempC, humidity, and iconPath
     public HourlyWeather(String time, double tempC, String iconPath) {
         this.time = time;
         this.tempC = tempC;
@@ -23,6 +22,6 @@ public class HourlyWeather {
 
 
     public String getIconPath() {
-        return iconPath;  // Return the icon path
+        return iconPath;
     }
 }

@@ -10,7 +10,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash); // Your splash layout here
+        setContentView(R.layout.activity_splash);
 
         // Delay transition to MainActivity for 5 seconds while MainActivity runs in the background
         new Handler().postDelayed(new Runnable() {
@@ -20,7 +20,6 @@ public class SplashActivity extends AppCompatActivity {
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
 
-                // Finish SplashActivity so it won't appear again
                 finish();
             }
         }, 3000);

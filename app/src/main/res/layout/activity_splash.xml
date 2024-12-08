@@ -23,8 +23,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
         android:layoutDirection="ltr"
-        android:text="HeatStroke Indicator"
-        android:textColor="#000"
+        android:text="HeatStroke Alert"
+        android:textColor="#003366"
         android:textSize="30sp"
         android:textStyle="bold" />
 </RelativeLayout>

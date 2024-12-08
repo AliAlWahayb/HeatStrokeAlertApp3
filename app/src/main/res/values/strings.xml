@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HeatStrokeAlertApp</string>
+    <string name="app_name">HeatStroke Alert</string>
     <string name="weather_api_key">f99262fc1e9a78230613d5ece2ce9150</string>
     <string name="sep_13">Sep,13</string>
     <string name="title_activity_maps">MapsActivity</string>

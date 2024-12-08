@@ -12,9 +12,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/safe"
+        android:icon="@drawable/ht_logo"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/safe"
+        android:roundIcon="@drawable/ht_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.HeatStrokeAlertApp"
         tools:targetApi="31">
@@ -36,6 +36,15 @@
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.Dialog">
         </activity>
+
+        <!-- PrecautionActivity -->
+        <activity android:name=".PrecautionActivity" />
+
+        <!-- ExplanationActivity -->
+        <activity android:name=".ExplanationActivity" />
+
+        <!-- NotificationsActivity -->
+        <activity android:name=".NotificationsActivity" />
 
     </application>
 

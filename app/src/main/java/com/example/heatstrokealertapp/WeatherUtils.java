@@ -53,16 +53,16 @@ public class WeatherUtils {
             try {
                 List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
                 if (addresses != null && !addresses.isEmpty()) {
-                    String cityName = addresses.get(0).getLocality(); // Get the city name
+                    String cityName = addresses.get(0).getLocality();
                     updateCityNameOnUI(cityName);
                     fetchWeatherData(cityName);
                 } else {
-                    String cityName = "City not found"; // Default if not found
+                    String cityName = "City not found";
                     updateCityNameOnUI(cityName);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                String cityName = "Geocoder error"; // Error message if geocoder fails
+                String cityName = "Geocoder error";
                 updateCityNameOnUI(cityName);
             }
         }).start();

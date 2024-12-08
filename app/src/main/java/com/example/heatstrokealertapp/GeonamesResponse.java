@@ -13,10 +13,10 @@ public class GeonamesResponse {
 
     public static class City {
         @SerializedName("name")
-        private String name;  // City name
+        private String name;
 
         @SerializedName("countryName")
-        private String country;  // Country name where the city is located
+        private String country;
 
         public String getName() {
             return name;
