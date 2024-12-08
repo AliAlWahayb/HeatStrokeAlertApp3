@@ -1,4 +1,4 @@
-# HeatStroke Alert
+![image](https://github.com/user-attachments/assets/29cce8ce-0622-47f2-a734-e57d281992ae)# HeatStroke Alert
 
 ## Project Overview
 The **HeatStroke Alert** app is designed to monitor real-time weather conditions, providing alerts when the temperature reaches dangerous levels that could lead to heatstroke. This application aims to help users stay safe by notifying them of extreme heat conditions in their location, enabling proactive steps to avoid heat-related illnesses. The app is developed as part of the mobile development course at IAU CCIT, Semester 8.
@@ -26,7 +26,7 @@ The **HeatStroke Alert** app is designed to monitor real-time weather conditions
 
 ![HeatStroke Alert - Home Screen](https://i.imgur.com/1iDLat7.png)
 ![HeatStroke Alert - Alert Explanation](https://i.imgur.com/eOQ6b9n.png)
-![HeatStroke Alert - Alert Precaution](https://imgur.com/ZRmBFox)
+![HeatStroke Alert - Alert Precaution](https://i.imgur.com/ZRmBFox.png)
 
 
 
