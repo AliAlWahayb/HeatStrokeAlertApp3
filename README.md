@@ -1,7 +1,7 @@
 # HeatStroke Alert
 
 ## App Icon
-![HeatStroke Alert - App Icon](https://i.imgur.com/7ibKCk1.png =150x150)
+<img src="https://i.imgur.com/7ibKCk1.png" alt="HeatStroke Alert - App Icon" width="150" height="150">
 
 ## Project Overview
 The **HeatStroke Alert** app is designed to monitor real-time weather conditions, providing alerts when the temperature reaches dangerous levels that could lead to heatstroke. This application aims to help users stay safe by notifying them of extreme heat conditions in their location, enabling proactive steps to avoid heat-related illnesses. The app is developed as part of the mobile development course at IAU CCIT, Semester 8.
