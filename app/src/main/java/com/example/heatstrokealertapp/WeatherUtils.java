@@ -224,7 +224,7 @@ public class WeatherUtils {
         editor.putFloat("windSpeed", (float) windSpeed);
         editor.putString("sunrise", sunrise);
         editor.putString("sunset", sunset);
-        editor.apply();  // Save asynchronously
+        editor.apply();
     }
 
     private void saveHourlyWeatherDataToPreferences(List<HourlyWeather> hourlyWeatherList) {
@@ -241,7 +241,7 @@ public class WeatherUtils {
             editor.putString("hour_" + i + "_icon", hourData.getIconPath());
         }
 
-        editor.apply();  // Save asynchronously
+        editor.apply();
     }
 
     private void saveDailyWeatherDataToPreferences(List<WeatherItem> weatherItems) {
@@ -259,7 +259,7 @@ public class WeatherUtils {
             editor.putString("day_" + i + "_icon", dayData.getIcon());
         }
 
-        editor.apply();  // Save asynchronously
+        editor.apply();
     }
 
 
@@ -281,7 +281,6 @@ public class WeatherUtils {
         String sunrise = sharedPreferences.getString("sunrise", "N/A");
         String sunset = sharedPreferences.getString("sunset", "N/A");
 
-        // Update the UI with saved data
         updateWeatherUI(weatherMain, maxTempC, minTempC, weatherMain, feelsLike, humidity,
                 dewPoint, visibility, pressure, windDeg, windSpeed, sunrise, sunset);
     }
@@ -299,7 +298,6 @@ public class WeatherUtils {
             hourlyWeatherList.add(new HourlyWeather(time, temp, icon));
         }
 
-        // Now, update the RecyclerView with the loaded data
         HourlyWeatherAdapter hourlyWeatherAdapter = new HourlyWeatherAdapter(hourlyWeatherList);
         hourlyWeatherRecyclerView.setAdapter(hourlyWeatherAdapter);
     }
@@ -319,7 +317,6 @@ public class WeatherUtils {
             weatherItems.add(new WeatherItem(date, maxTemp, minTemp, avgHumidity, icon));
         }
 
-        // Now, update the RecyclerView with the loaded data
         WeatherAdapter weatherAdapter = new WeatherAdapter(weatherItems);
         recyclerView.setAdapter(weatherAdapter);
     }
