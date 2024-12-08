@@ -7,30 +7,40 @@
     android:background="#F5F5F5"
     android:layout_marginBottom="8dp">
 
+    <!-- Notification Icon -->
     <ImageView
         android:id="@+id/notification_icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="8dp"
-        android:contentDescription="Notification Icon" />
+        android:layout_marginEnd="12dp"
+        android:contentDescription="Notification Icon"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center_vertical" />
 
+    <!-- Notification details -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_vertical">
 
+        <!-- Notification Time -->
         <TextView
             android:id="@+id/notification_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#757575"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:layout_marginBottom="4dp" />
 
+        <!-- Notification Message -->
         <TextView
             android:id="@+id/notification_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#3A4A58"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:maxLines="2"
+            android:ellipsize="end" />
     </LinearLayout>
 </LinearLayout>

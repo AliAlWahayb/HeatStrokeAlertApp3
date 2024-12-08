@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class WeatherApi {
-    private static final String API_KEY = "d61006078fa84f45bf3224454240412"; // Replace with your WeatherAPI key
+    private static final String API_KEY = "d61006078fa84f45bf3224454240412";
     private static final String BASE_URL = "https://api.weatherapi.com/v1/forecast.json";
 
     public static void getWeatherData(String cityName, final WeatherDataCallback callback) {
@@ -22,7 +22,6 @@ public class WeatherApi {
             @Override
             protected String doInBackground(String... params) {
                 String city = params[0];
-                // Correct the URL and remove the extra space after the API key
                 String urlString = BASE_URL + "?key=" + API_KEY + "&q=" + city + "&days=7&hourly=yes&aqi=no&alerts=no";
 
                 try {
@@ -101,7 +100,7 @@ public class WeatherApi {
                             Date date = inputFormat.parse(hourtime);
 
                             // Format the Date object into the desired 12-hour format
-                            String formattedTime = outputFormat.format(date);  // e.g., "01:00 PM"
+                            String formattedTime = outputFormat.format(date);
                             double hourtempC = hourData.getDouble("temp_c");
                             int hourheatindex = hourData.getInt("heatindex_c");
 
@@ -120,14 +119,6 @@ public class WeatherApi {
                             hourlyWeatherDataList.add(hourDataList);
                         }
 
-                            // Now hourlyWeatherDataList is populated with hourly data for the first forecast day
-
-
-
-
-
-
-
                         // ArrayList to store all the dates
                         ArrayList<ArrayList<String>> weatherDataList = new ArrayList<>();
 
@@ -135,7 +126,7 @@ public class WeatherApi {
                         for (int i = 0; i < forecastday.length(); i++) {
                             JSONObject day = forecastday.getJSONObject(i);
 
-                            String forecastdate = day.getString("date"); // Extract the date for each day
+                            String forecastdate = day.getString("date");
                             double forecastavgTempf = day.getJSONObject("day").getDouble("mintemp_f");
                             double forecastminTempC = day.getJSONObject("day").getDouble("mintemp_c");
                             double forecastmaxTempC = day.getJSONObject("day").getDouble("maxtemp_c");

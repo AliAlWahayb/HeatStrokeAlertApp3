@@ -7,7 +7,7 @@
     <!-- The outer circle -->
     <path
         android:fillColor="@android:color/transparent"
-        android:strokeColor="#000000"
+        android:strokeColor="#003366"
         android:strokeWidth="5"
         android:strokeLineCap="round"
         android:strokeLineJoin="round"
@@ -16,7 +16,7 @@
     <!-- The diagonal line -->
     <path
         android:fillColor="@android:color/transparent"
-        android:strokeColor="#000000"
+        android:strokeColor="#003366"
         android:strokeWidth="5"
         android:strokeLineCap="round"
         android:strokeLineJoin="round"

@@ -37,6 +37,15 @@
             android:theme="@style/Theme.AppCompat.Light.Dialog">
         </activity>
 
+        <!-- PrecautionActivity -->
+        <activity android:name=".PrecautionActivity" />
+
+        <!-- ExplanationActivity -->
+        <activity android:name=".ExplanationActivity" />
+
+        <!-- NotificationsActivity -->
+        <activity android:name=".NotificationsActivity" />
+
     </application>
 
 </manifest>

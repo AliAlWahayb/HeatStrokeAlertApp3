@@ -12,14 +12,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -34,6 +34,7 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        // Initialize views
         cityListView = findViewById(R.id.city_list);
         searchEditText = findViewById(R.id.search_bar);
 
@@ -43,10 +44,9 @@ public class SearchActivity extends AppCompatActivity {
 
         // Set up Retrofit to call the Geonames API
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://secure.geonames.org/")  // Correct GeoNames URL
+                .baseUrl("https://secure.geonames.org/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
 
         geonamesService = retrofit.create(GeonamesService.class);
 
@@ -59,7 +59,7 @@ public class SearchActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
                 String query = charSequence.toString();
                 if (!query.isEmpty()) {
-                    fetchCities(query); // Fetch cities when the user types
+                    fetchCities(query);
                 }
             }
 
@@ -70,8 +70,10 @@ public class SearchActivity extends AppCompatActivity {
         // Handle item click
         cityListView.setOnItemClickListener((parent, view, position, id) -> {
             String selectedCity = currentCities.get(position);
+
+            // Returning selected city to MainActivity
             Intent resultIntent = new Intent();
-            resultIntent.putExtra("selected_text", selectedCity);
+            resultIntent.putExtra("selected_city", selectedCity);
             setResult(RESULT_OK, resultIntent);
             finish();
         });
@@ -87,11 +89,11 @@ public class SearchActivity extends AppCompatActivity {
             public void onResponse(Call<GeonamesResponse> call, Response<GeonamesResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<GeonamesResponse.City> cities = response.body().getCities();
-                    currentCities.clear(); // Clear the previous list
+                    currentCities.clear();
                     for (GeonamesResponse.City city : cities) {
                         currentCities.add(city.getName());
                     }
-                    cityAdapter.notifyDataSetChanged(); // Refresh the ListView
+                    cityAdapter.notifyDataSetChanged();
                 } else {
                     Log.e("SearchActivity", "Response failed: " + response.code() + " - " + response.message());
                     Toast.makeText(SearchActivity.this, "No cities found", Toast.LENGTH_SHORT).show();

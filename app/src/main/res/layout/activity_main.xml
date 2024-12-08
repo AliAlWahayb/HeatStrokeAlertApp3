@@ -35,63 +35,17 @@
             android:padding="16dp">
 
 
+            <!-- Menu Button -->
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/MenuBtn"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="16dp"
-                android:layoutDirection="ltr"
-                android:paddingTop="10dp">
-
-
-                <ImageButton
-                    android:id="@+id/SearchBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:layout_gravity="left"
-                    android:layout_weight="1"
-                    android:background="#00FFFFFF"
-                    android:contentDescription="Location Icon"
-                    android:layoutDirection="ltr"
-                    android:src="@drawable/search_icon" />
-
-                <ImageButton
-                    android:id="@+id/searchBtn3"
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:layout_gravity="left"
-                    android:layout_weight="1"
-                    android:background="#00FFFFFF"
-                    android:contentDescription="Location Icon"
-                    android:layoutDirection="ltr"
-                    android:src="@drawable/help_icon" />
-
-
-                <ImageButton
-                    android:id="@+id/searchBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:layout_gravity="left"
-                    android:layout_weight="1"
-                    android:background="#00FFFFFF"
-                    android:contentDescription="Location Icon"
-                    android:layoutDirection="ltr"
-                    android:scaleX="2"
-                    android:scaleY="2"
-                    android:src="@drawable/baseline_sunny_24" />
-
-                <ImageButton
-                    android:id="@+id/NotificationBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:layout_gravity="start"
-                    android:layout_weight="1"
-                    android:background="#00FFFFFF"
-                    android:contentDescription="Bell Icon"
-                    android:layoutDirection="ltr"
-                    android:scaleX="2"
-                    android:scaleY="2"
-                    android:src="@drawable/baseline_notifications_none_24" />
+                android:layout_gravity="end">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Menu Button"
+                    android:src="@drawable/menu_icon" />
             </LinearLayout>
 
 
@@ -651,37 +605,18 @@
     </ScrollView>
 
 
-    <!-- Notification Pop-Up Drawer -->
+    <!-- the menu -->
     <FrameLayout
-        android:id="@+id/notification_popup"
+        android:id="@+id/menu_popup"
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:background="@android:color/white"
         android:visibility="gone">
 
-        <!-- Notification RecyclerView -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_notifications"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp" />
-    </FrameLayout>
-
-    <!-- Left sliding layout (pop-up) -->
-    <FrameLayout
-        android:id="@+id/search_popup"
-        android:layout_width="300dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@android:color/white"
-        android:visibility="gone">
-
-        <!-- Your sliding pop-up content (another layout) -->
-        <!-- Include the layout from activity_notifications.xml -->
         <include
-            android:id="@+id/search_content"
-            layout="@layout/activity_search" />
+            android:id="@+id/menu_layout"
+            layout="@layout/menu" />
     </FrameLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>

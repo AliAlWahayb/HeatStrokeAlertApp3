@@ -3,36 +3,19 @@ package com.example.heatstrokealertapp;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.util.Log;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LocationUtils.OnLocationRetrievedListener {
 
@@ -43,12 +26,10 @@ public class MainActivity extends AppCompatActivity implements LocationUtils.OnL
             PressureTextTextView, SunriseTextView, SunSetTextView, WindDegTextView, WindSpeedTextView, UvIndexTextTextView, DewPointTextView;
     private RecyclerView recyclerView, hourlyWeatherRecyclerView;
     private DrawerLayout drawerLayout;
-    private ImageButton OpenSearchBtn, OpenNotificationBtn;
-    private FrameLayout rightPopupLayout, leftPopupLayout;
+    private Button notificationsBtn, searchBtn, precautionBtn, explanationBtn;
 
     private WeatherUtils weatherUtils;
     private LocationUtils locationUtils;
-    private String cityName = "";
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -88,47 +69,57 @@ public class MainActivity extends AppCompatActivity implements LocationUtils.OnL
                 WindSpeedTextView, UvIndexTextTextView, SunriseTextView, SunSetTextView, hourlyWeatherRecyclerView,
                 recyclerView);
 
-        // Drawer layout and button setup
+        // Initialize views
         drawerLayout = findViewById(R.id.drawer_layout);
-        OpenNotificationBtn = findViewById(R.id.NotificationBtn);
-        OpenSearchBtn = findViewById(R.id.SearchBtn);
-        rightPopupLayout = findViewById(R.id.notification_popup);
-        leftPopupLayout = findViewById(R.id.search_popup);
 
-        // notificationRecyclerView
-        RecyclerView notificationRecyclerView = findViewById(R.id.recycler_view_notifications);
-        notificationRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // Menu Buttons
+        notificationsBtn = findViewById(R.id.NotificationsBtn);
+        searchBtn = findViewById(R.id.SearchBtn);
+        precautionBtn = findViewById(R.id.PrecautionBtn);
+        explanationBtn = findViewById(R.id.ExplanationBtn);
 
-        // Sample notifications
-        List<NotificationItem> notifications = new ArrayList<>();
-        notifications.add(new NotificationItem("10 minutes ago", "A sunny day in your location, consider wearing UV protection", R.drawable.caution));
-        notifications.add(new NotificationItem("1 day ago", "A cloudy day will occur all day long, don't worry about the heat of the sun", R.drawable.safe));
-        notifications.add(new NotificationItem("2 days ago", "Potential for rain today is 84%, don't forget your umbrella.", R.drawable.safe));
-
-        // Attach adapter
-        NotificationAdapter adapter = new NotificationAdapter(notifications);
-        notificationRecyclerView.setAdapter(adapter);
-
-        // Notification button click handler
-        OpenNotificationBtn.setOnClickListener(v -> {
-            if (drawerLayout != null) {
-                rightPopupLayout.setVisibility(View.VISIBLE);
-                drawerLayout.openDrawer(GravityCompat.END); // Opens from the right
-            } else {
-                Log.e("MainActivity", "DrawerLayout or rightPopupLayout is null!");
-            }
+        // Open menu when button clicked
+        LinearLayout openMenuButton = findViewById(R.id.MenuBtn);
+        openMenuButton.setOnClickListener(v -> {
+            drawerLayout.openDrawer(GravityCompat.END);  // Opens the menu from the right
         });
 
-        // Search button click handler
-        OpenSearchBtn.setOnClickListener(v -> {
-            try {
-                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-                startActivityForResult(intent, REQUEST_CODE_SEARCH);
-            } catch (Exception e) {
-                Toast.makeText(MainActivity.this, "Failed to open SearchActivity: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                e.printStackTrace();
-            }
+        // Handle Notifications Button click
+        notificationsBtn.setOnClickListener(v -> {
+            Intent NotificationsIntent = new Intent(MainActivity.this, NotificationsActivity.class);
+            startActivity(NotificationsIntent);
         });
+
+        // Handle Search Button click
+        searchBtn.setOnClickListener(v -> {
+            // Open the search activity
+            Intent searchIntent = new Intent(MainActivity.this, SearchActivity.class);
+            startActivityForResult(searchIntent, REQUEST_CODE_SEARCH);  // Start SearchActivity for result
+        });
+
+        // Handle Precaution Button click
+        precautionBtn.setOnClickListener(v -> {
+            // Start PrecautionActivity
+            Intent precautionIntent = new Intent(MainActivity.this, PrecautionActivity.class);
+            startActivity(precautionIntent);
+        });
+
+        // Handle Explanation Button click
+        explanationBtn.setOnClickListener(v -> {
+            // Start ExplanationActivity
+            Intent explanationIntent = new Intent(MainActivity.this, ExplanationActivity.class);
+            startActivity(explanationIntent);
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Close the menu when back button is pressed if the menu is visible
+        if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+            drawerLayout.closeDrawer(GravityCompat.END);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -138,15 +129,17 @@ public class MainActivity extends AppCompatActivity implements LocationUtils.OnL
         weatherUtils.fetchWeatherData(cityName);
     }
 
+    // Handle the result from SearchActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_SEARCH && resultCode == RESULT_OK) {
-            String selectedText = data.getStringExtra("selected_text");
-            if (selectedText != null) {
-                cityNameTextView.setText(selectedText);
-                weatherUtils.fetchWeatherData(selectedText);
+            String selectedCity = data.getStringExtra("selected_city");
+            if (selectedCity != null) {
+                // Update the city name and fetch weather data
+                cityNameTextView.setText(selectedCity);
+                weatherUtils.fetchWeatherData(selectedCity);  // Fetch weather data for the selected city
             }
         }
     }
