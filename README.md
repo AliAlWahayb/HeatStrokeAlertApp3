@@ -27,9 +27,14 @@ The **HeatStroke Alert** app is designed to monitor real-time weather conditions
 
 ## Screenshots
 
-![HeatStroke Alert - Home Screen](https://i.imgur.com/1iDLat7.png =300x500)
-![HeatStroke Alert - Alert Explanation](https://i.imgur.com/eOQ6b9n.png =300x500)
-![HeatStroke Alert - Alert Precaution](https://i.imgur.com/ZRmBFox.png =300x500)
+## Home Screen
+<img src="https://i.imgur.com/1iDLat7.png" alt="HeatStroke Alert - Home Screen" width="300" height="500">
+
+## Alert Explanation
+<img src="https://i.imgur.com/eOQ6b9n.png" alt="HeatStroke Alert - Alert Explanation" width="300" height="500">
+
+## Alert Precaution
+<img src="https://i.imgur.com/ZRmBFox.png" alt="HeatStroke Alert - Alert Precaution" width="300" height="500">
 
 
 
