@@ -1,6 +1,7 @@
 package com.example.heatstrokealertapp;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Looper;
 import android.widget.Toast;
 import android.widget.TextView;
@@ -82,6 +83,10 @@ public class WeatherUtils {
                                   double windSpeed, int windDeg, String sunrise, String sunset,
                                   double minTempC, double maxTempC, double avgTempC, int avgHumidity) {
 
+                // Save the weather data to SharedPreferences
+                saveWeatherDataToPreferences(cityName, weatherMain, maxTempC, minTempC, feelsLike, humidity,
+                        dewPoint, visibility, pressure, windDeg, windSpeed, sunrise, sunset);
+
                 updateWeatherUI(weatherMain, maxTempC, minTempC, weatherMain, feelsLike, humidity,
                         dewPoint, visibility, pressure, windDeg, windSpeed, sunrise, sunset);
 
@@ -130,6 +135,9 @@ public class WeatherUtils {
             }
         }
 
+        // Save the hourly weather data to preferences
+        saveHourlyWeatherDataToPreferences(hourlyWeatherList);
+
         HourlyWeatherAdapter hourlyWeatherAdapter = new HourlyWeatherAdapter(hourlyWeatherList);
         hourlyWeatherRecyclerView.setAdapter(hourlyWeatherAdapter);
     }
@@ -146,6 +154,10 @@ public class WeatherUtils {
             String iconPath = classifyHeatIndexFahrenheit(heatIndex);
             weatherItems.add(new WeatherItem(date, maxTemp, minTemp, forecastavgHumidity, iconPath));
         }
+
+        // Save the daily weather data to preferences
+        saveDailyWeatherDataToPreferences(weatherItems);
+
 
         WeatherAdapter weatherAdapter = new WeatherAdapter(weatherItems);
         recyclerView.setAdapter(weatherAdapter);
@@ -193,5 +205,127 @@ public class WeatherUtils {
                 5.481717e-02 * Math.pow(humidity, 2) + 1.22874e-03 * Math.pow(temperatureFahrenheit, 2) * humidity +
                 8.5282e-04 * temperatureFahrenheit * Math.pow(humidity, 2) - 1.99e-06 * Math.pow(temperatureFahrenheit, 2) * Math.pow(humidity, 2);
     }
+
+    private void saveWeatherDataToPreferences(String cityName, String weatherMain, double maxTempC, double minTempC,
+                                              double feelsLike, int humidity, double dewPoint, double visibility,
+                                              double pressure, int windDeg, double windSpeed, String sunrise, String sunset) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("WeatherPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("cityName", cityName);
+        editor.putString("weatherMain", weatherMain);
+        editor.putFloat("maxTempC", (float) maxTempC);
+        editor.putFloat("minTempC", (float) minTempC);
+        editor.putFloat("feelsLike", (float) feelsLike);
+        editor.putInt("humidity", humidity);
+        editor.putFloat("dewPoint", (float) dewPoint);
+        editor.putFloat("visibility", (float) visibility);
+        editor.putFloat("pressure", (float) pressure);
+        editor.putInt("windDeg", windDeg);
+        editor.putFloat("windSpeed", (float) windSpeed);
+        editor.putString("sunrise", sunrise);
+        editor.putString("sunset", sunset);
+        editor.apply();  // Save asynchronously
+    }
+
+    private void saveHourlyWeatherDataToPreferences(List<HourlyWeather> hourlyWeatherList) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("WeatherPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        // Clear the previous hourly data
+        editor.putInt("hourlyWeatherSize", hourlyWeatherList.size());
+
+        for (int i = 0; i < hourlyWeatherList.size(); i++) {
+            HourlyWeather hourData = hourlyWeatherList.get(i);
+            editor.putString("hour_" + i + "_time", hourData.getTime());
+            editor.putFloat("hour_" + i + "_temp", (float) hourData.getTempC());
+            editor.putString("hour_" + i + "_icon", hourData.getIconPath());
+        }
+
+        editor.apply();  // Save asynchronously
+    }
+
+    private void saveDailyWeatherDataToPreferences(List<WeatherItem> weatherItems) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("WeatherPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        // Clear the previous daily data
+        editor.putInt("dailyWeatherSize", weatherItems.size());
+
+        for (int i = 0; i < weatherItems.size(); i++) {
+            WeatherItem dayData = weatherItems.get(i);
+            editor.putString("day_" + i + "_date", dayData.getDate());
+            editor.putFloat("day_" + i + "_maxTemp", (float) dayData.getTempMax());
+            editor.putFloat("day_" + i + "_minTemp", (float) dayData.getTempMin());
+            editor.putString("day_" + i + "_icon", dayData.getIcon());
+        }
+
+        editor.apply();  // Save asynchronously
+    }
+
+
+
+    public void loadLastSavedWeatherData() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("WeatherPrefs", Context.MODE_PRIVATE);
+
+        String cityName = sharedPreferences.getString("cityName", "Unknown City");
+        String weatherMain = sharedPreferences.getString("weatherMain", "N/A");
+        int maxTempC = (int) sharedPreferences.getFloat("maxTempC", 0);
+        int minTempC = (int) (sharedPreferences.getFloat("minTempC", 0));
+        int feelsLike = (int) (sharedPreferences.getFloat("feelsLike", 0));
+        int humidity = sharedPreferences.getInt("humidity", 0);
+        int dewPoint = (int) (sharedPreferences.getFloat("dewPoint", 0));
+        int visibility = (int) (sharedPreferences.getFloat("visibility", 0));
+        int pressure = (int) (sharedPreferences.getFloat("pressure", 0));
+        int windDeg = sharedPreferences.getInt("windDeg", 0);
+        int windSpeed = (int) (sharedPreferences.getFloat("windSpeed", 0));
+        String sunrise = sharedPreferences.getString("sunrise", "N/A");
+        String sunset = sharedPreferences.getString("sunset", "N/A");
+
+        // Update the UI with saved data
+        updateWeatherUI(weatherMain, maxTempC, minTempC, weatherMain, feelsLike, humidity,
+                dewPoint, visibility, pressure, windDeg, windSpeed, sunrise, sunset);
+    }
+
+    public void loadHourlyWeatherData() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("WeatherPrefs", Context.MODE_PRIVATE);
+        int size = sharedPreferences.getInt("hourlyWeatherSize", 0);
+        List<HourlyWeather> hourlyWeatherList = new ArrayList<>();
+
+        for (int i = 0; i < size; i++) {
+            String time = sharedPreferences.getString("hour_" + i + "_time", "");
+            int temp = (int) (sharedPreferences.getFloat("hour_" + i + "_temp", 0));
+            String icon = sharedPreferences.getString("hour_" + i + "_icon", "");
+
+            hourlyWeatherList.add(new HourlyWeather(time, temp, icon));
+        }
+
+        // Now, update the RecyclerView with the loaded data
+        HourlyWeatherAdapter hourlyWeatherAdapter = new HourlyWeatherAdapter(hourlyWeatherList);
+        hourlyWeatherRecyclerView.setAdapter(hourlyWeatherAdapter);
+    }
+
+    public void loadDailyWeatherData() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("WeatherPrefs", Context.MODE_PRIVATE);
+        int size = sharedPreferences.getInt("dailyWeatherSize", 0);
+        List<WeatherItem> weatherItems = new ArrayList<>();
+
+        for (int i = 0; i < size; i++) {
+            String date = sharedPreferences.getString("day_" + i + "_date", "");
+            int maxTemp = (int) (sharedPreferences.getFloat("day_" + i + "_maxTemp", 0));
+            int minTemp = (int) (sharedPreferences.getFloat("day_" + i + "_minTemp", 0));
+            int avgHumidity = sharedPreferences.getInt("day_" + i + "_avgHumidity", 0);
+            String icon = sharedPreferences.getString("day_" + i + "_icon", "");
+
+            weatherItems.add(new WeatherItem(date, maxTemp, minTemp, avgHumidity, icon));
+        }
+
+        // Now, update the RecyclerView with the loaded data
+        WeatherAdapter weatherAdapter = new WeatherAdapter(weatherItems);
+        recyclerView.setAdapter(weatherAdapter);
+    }
+
+
+
+
 
 }

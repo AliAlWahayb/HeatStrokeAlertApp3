@@ -69,6 +69,11 @@ public class MainActivity extends AppCompatActivity implements LocationUtils.OnL
                 WindSpeedTextView, UvIndexTextTextView, SunriseTextView, SunSetTextView, hourlyWeatherRecyclerView,
                 recyclerView);
 
+        // Load the last saved weather data
+        weatherUtils.loadLastSavedWeatherData();
+        weatherUtils.loadHourlyWeatherData();
+        weatherUtils.loadDailyWeatherData();
+
         // Initialize views
         drawerLayout = findViewById(R.id.drawer_layout);
 

@@ -18,7 +18,7 @@
         android:textColorHighlight="#00FFFFFF"
         android:textColorHint="#00FFFFFF"
         android:textColorLink="#00FFFFFF"
-        android:textSize="34sp"
+        android:textSize="30sp"
         app:icon="@drawable/baseline_notifications_none_24"
         app:iconSize="50dp"
         app:iconTint="#003365"
