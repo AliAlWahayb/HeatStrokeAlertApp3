@@ -1,6 +1,5 @@
 # HeatStroke Alert
 
-!App Icon
 <img src="https://i.imgur.com/7ibKCk1.png" alt="HeatStroke Alert - App Icon" width="150" height="150">
 
 ## Project Overview
